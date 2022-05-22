@@ -8,11 +8,26 @@ const theme = {
         tertiary: '#60A8F4',
         text: '#bfbfbf',
     },
+    badgeMessage : {
+        success: {
+            background: '#d4edda',
+            color: '#155724'
+        },
+        error: {
+            background: '#f8d7da',
+            color: '#960505'
+        },
+        signing: {
+            background: '#297fff3e',
+            color: '#3659F0'
+        }
+    },
+    maxWidth: '1200px'
 
 };
 
 type Props = {
-    children: any
+    children: React.ReactNode
 }
 const Theme: React.FC<Props> = ({ children }) => (
     <ThemeProvider theme={theme}> { children } </ThemeProvider>
