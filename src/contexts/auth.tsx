@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { AuthContextProp } from "./view";
 
 const DEFAULT_VALUE = {
-    authenticated: true,
+    authenticated: false,
     setAuthenticated(): void {}
 }
 export const AuthContext = createContext<AuthContextProp>(DEFAULT_VALUE);
