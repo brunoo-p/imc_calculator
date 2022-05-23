@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import SignIn from '../components/signIn';
 import Form from '../pages/form';
+
 const AuthRoutes = () => {
   
     return (

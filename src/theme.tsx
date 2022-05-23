@@ -7,6 +7,7 @@ const theme = {
         secondary: '#1d1d21',
         tertiary: '#60A8F4',
         text: '#bfbfbf',
+        background: '#262626'
     },
     badgeMessage : {
         success: {
