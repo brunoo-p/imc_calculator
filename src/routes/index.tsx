@@ -7,7 +7,7 @@ const Routes: React.FC = () => {
 
     const { authenticated } = useAuth();
 
-    return ( !authenticated ? <AppRoutes /> : <AuthRoutes /> )
+    return ( authenticated ? <AppRoutes /> : <AuthRoutes /> )
 }
 
 export default Routes

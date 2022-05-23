@@ -4,9 +4,9 @@ import { AuthContext } from '../auth';
 export const useAuth = () => {
 
     const context = useContext(AuthContext);
-    const { authenticated, setAuthenticated } = context;
+    const { authenticated, setAuthenticated, signIn } = context;
 
     return {
-        authenticated, setAuthenticated
+        authenticated, setAuthenticated, signIn
     }
 }

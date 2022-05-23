@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { Box, Typography } from "@mui/material"
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 
 import InputFormik from './InputFormik';
 import Badge from './badgeMessage';
 import { validateLogin } from '../utils/validateForm';
+import { LoginProps } from '../pages/formView';
 
 const Container = styled(Box)`
     display: flex;
@@ -88,23 +89,26 @@ const FormStyle = styled.div`
 `;
 
 type Props = {
+    onLogin: (login: LoginProps) => void;
     messageSubmit: string;
-    classMessage: string
+    classMessage: string;
 }
-const SignIn: React.FC<Props> = ({ messageSubmit, classMessage }) => {
+const SignIn: React.FC<Props> = ({ onLogin, messageSubmit, classMessage }) => {
     
     const LoginForm = () => (
         <Formik
             initialValues={{ username: '', password: '' }}
             validationSchema={validateLogin}
-            // onSubmit={(values) => onLogin(values)}
-            onSubmit={() => console.log('')}
+            onSubmit={(values) => onLogin(values)}
         >
-                <Box data-testid="form">
+                <Form data-testid="form">
+                    
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <Typography variant="h4"> Sign in </Typography>
                     </Box>
+                    
                     {messageSubmit && <Badge className={classMessage} message={messageSubmit} />}
+                    
                     <FormStyle>
 
                         <label htmlFor="username">
@@ -135,7 +139,7 @@ const SignIn: React.FC<Props> = ({ messageSubmit, classMessage }) => {
                         />
                         
                     </FormStyle>
-                </Box>
+                </Form>
         </Formik>
     )
     return (

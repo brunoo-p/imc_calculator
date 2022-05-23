@@ -2,9 +2,6 @@ import styled from 'styled-components';
 import Card from './card';
 
 import { Box } from '@mui/material';
-import Portal from '../portal';
-import ScreenMessage from './screenMessage';
-import { useState } from 'react';
 
 const Container = styled(Box)`
     display: flex;
@@ -20,20 +17,11 @@ const Container = styled(Box)`
     gap: 1rem;
 `;
 
-const ListCards = () => {
+const ListCards = () => (
+    <Container>
+        <Card />
+    </Container>
+)
 
-    const [showPortal, setShowPortal] = useState<boolean>(false);
-    return (
-        <Container>
-            {/* {showPortal && (
-
-                <Portal>
-                    <ScreenMessage setShowPortal={setShowPortal} /> 
-                </Portal>)
-            } */}
-            <Card />
-        </Container>
-    )
-}
 
 export default ListCards

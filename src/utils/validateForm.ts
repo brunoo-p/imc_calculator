@@ -10,7 +10,7 @@ export const validateLogin = Yup.object({
         .required('Required Field')
         .matches(emailRegex, 'Invalid email address'),
     password: Yup.string().required('Required Field')
-    .matches(passRegex,
-        'This field must contain min 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 special case Character'
-    )
+    //.matches(passRegex,
+        //'This field must contain min 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number and 1 special case Character'
+    //)
 });
