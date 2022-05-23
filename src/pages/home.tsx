@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import ListCards from '../components/app/listCards';
 import Navbar from '../components/app/navbar';
@@ -29,7 +30,7 @@ const Content = styled(Flexbox)`
 
 
 const Home = () => {
-    
+
     return (
         <Container>
             <Content>

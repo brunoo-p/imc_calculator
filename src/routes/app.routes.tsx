@@ -6,11 +6,12 @@ const AppRoutes = () =>
     (
     
         <Routes>
-            <Route path="/" element={ <Navigate to="app" /> } />            
+            <Route path="/signin" element={ <Navigate to="/" /> } />            
+            
+            <Route path="/" element={ <Navigate to="/app" /> } />            
             <Route path="app" element={ <Home /> } />
             <Route path="notFound" element={ <NotFound /> } />
-            <Route path="signin" element={ <Navigate to="/" /> } />            
-            <Route path="*" element={ <Navigate to="notFound" /> } />
+            <Route path="*" element={ <Navigate to="/notFound" /> } />
         </Routes>
 
   

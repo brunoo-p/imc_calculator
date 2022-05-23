@@ -3,6 +3,9 @@ import { useState } from "react";
 import styled from 'styled-components';
 import LeadSoftBadge from "../components/leadSoftBadge";
 import SignIn from "../components/signIn";
+import { useAuth } from "../contexts/hooks/useAuth";
+import { serviceLogin } from "./form.service";
+import { LoginProps } from "./formView";
 
 const Container = styled(Box)`
     display: flex;
@@ -26,8 +29,31 @@ const Content = styled(Box)`
 
 const Form = () => {
 
-    const [messageSubmit, setMessageSubmit] = useState('ok');
-    const [classMessage, setClassMessage] = useState('success');
+    const { signIn } = useAuth();
+
+    const [messageSubmit, setMessageSubmit] = useState('');
+    const [classMessage, setClassMessage] = useState('');
+    
+    const onLogin = async (values: LoginProps) => {
+
+        setMessageSubmit('Signing ...');
+        setClassMessage('signing');
+        
+        try {
+            
+            const response = await serviceLogin(
+                values,
+                signIn
+            );
+            console.log(response);
+            setMessageSubmit(response.message);
+            setClassMessage(response.classMessage);
+        
+        } catch (error) {
+            
+            console.log(error);
+        }
+    };
 
   return (
         <Container>
@@ -36,7 +62,11 @@ const Form = () => {
 
             <Content>
 
-                <SignIn messageSubmit={messageSubmit} classMessage={classMessage} />
+                <SignIn
+                    onLogin={onLogin}
+                    messageSubmit={messageSubmit}
+                    classMessage={classMessage}
+                />
 
             </Content>
         </Container>

@@ -1,11 +1,9 @@
 import { createContext, useState } from "react";
+import { LoginRequest } from "../services/core/auth/authRequestTypes";
+import AuthComponentFacade from "./authComponentFacade";
 import { AuthContextProp } from "./view";
 
-const DEFAULT_VALUE = {
-    authenticated: false,
-    setAuthenticated(): void {}
-}
-export const AuthContext = createContext<AuthContextProp>(DEFAULT_VALUE);
+export const AuthContext = createContext<AuthContextProp>({} as AuthContextProp);
 
 type Props = {
     children: React.ReactNode;
@@ -14,9 +12,18 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
     const [authenticated, setAuthenticated] = useState(false);
 
+    const signIn = async (data: LoginRequest) => {
+        
+        return AuthComponentFacade
+            .instance()
+            .signIn(data, setAuthenticated);
+    }
+      
+      
     const value = {
         authenticated,
-        setAuthenticated
+        setAuthenticated,
+        signIn
     }
     return (
         <AuthContext.Provider value={value}>
