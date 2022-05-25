@@ -5,7 +5,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Portal from '../portal';
 import ScreenMessage from './screenMessage';
 import { useState } from 'react';
-import { Forms } from './screenMessage/view';
+import { Forms, Person } from './screenMessage/view';
 
 const Container = styled(Box)`
     width: 250px;
@@ -62,10 +62,6 @@ const Weight = styled(Box)`
     margin: 20px 0;
     padding-bottom: 10px;
     justify-content: space-around;
-
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    mask-image: linear-gradient(black, transparent); */
 `;
 const Buttons = styled(Box)`
     display: flex;
@@ -77,7 +73,10 @@ const Buttons = styled(Box)`
     }
 `;
 
-const Card = () => {
+type Props = {
+    person: Person;
+}
+const Card: React.FC<Props> = ({ person }) => {
 
     const [showPortal, setShowPortal] = useState<boolean>(false);
     const [screen, setScreen] = useState<keyof typeof Forms>(Forms.Edit);
@@ -91,31 +90,33 @@ const Card = () => {
         setScreen(Forms.Exclude);
         setShowPortal(true);
     }
+
+    const { fullName, age, weigth: weight, height, imc } = person;
     return (
         <Container>
             {showPortal && (
 
                 <Portal>
-                    <ScreenMessage setShowPortal={setShowPortal} screen={screen} /> 
+                    <ScreenMessage setShowPortal={setShowPortal} screen={screen} person={person} /> 
                 </Portal>)
             }
             <Content>
                 <Box>
                     
                     <Typography sx={{ display: 'flex', width: '100%', justifyContent: 'center' }} variant="body1">
-                        Bruno Paulino
+                        {fullName}
                     </Typography>
                     
                     <Attributes sx={{ marginTop: '30px' }}>
-                        <Typography variant="body2"> <span> Idade: </span> 25 anos  </Typography>
+                        <Typography variant="body2"> <span> Idade: </span> {age} anos  </Typography>
                     </Attributes>
                     <Attributes>
-                        <Typography variant="body2"> <span> Altura: </span> 1,71 cm </Typography>
+                        <Typography variant="body2"> <span> Altura: </span> {height} cm </Typography>
                     </Attributes>
                     
                     <Weight>
-                        <Typography variant="body2"> <span> Peso: </span> 80 kg </Typography>
-                        <Typography variant="body2"> <span> IMC: </span> 45 </Typography>
+                        <Typography variant="body2"> <span> Peso: </span> {weight} kg </Typography>
+                        <Typography variant="body2"> <span> IMC: </span> {imc} </Typography>
                     </Weight>
                     <Buttons>
                         <Button 
