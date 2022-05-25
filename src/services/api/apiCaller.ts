@@ -1,4 +1,5 @@
-import { AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { LoginToken } from "../core/auth/loginToken";
 
 const caller = async <T>(
     callApi: () => Promise<AxiosResponse>,
@@ -7,9 +8,12 @@ const caller = async <T>(
 
     try {
 
-        console.log(callApi);
         const response: AxiosResponse = await callApi();
         console.debug('response', response);
+        
+        if (mapper) {
+            return mapper(response.data);
+        }
         return response;
     
     } catch (exception) {
@@ -20,8 +24,21 @@ const caller = async <T>(
 
 };
 
+const headerBuilder = (token: string): AxiosRequestConfig => {
+    
+    const access = JSON.parse(token);
+    const accessToken = new LoginToken(access.Authorization, access.When);
+
+    return {
+        headers: {
+            Authorization: `${accessToken.authorization}`
+        }
+    }
+}
+
 const ApiCaller = {
     caller,
+    headerBuilder
 }
 
 export default ApiCaller;

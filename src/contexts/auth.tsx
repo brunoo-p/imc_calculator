@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { LoginRequest } from "../services/core/auth/authRequestTypes";
-import AuthComponentFacade from "./authComponentFacade";
-import { AuthContextProp } from "./view";
+import AuthComponentFacade, { INITIAL_USER } from "./authComponentFacade";
+import { AuthContextProp, IUser } from "./view";
 
 export const AuthContext = createContext<AuthContextProp>({} as AuthContextProp);
 
@@ -10,19 +10,33 @@ type Props = {
 }
 const AuthProvider: React.FC<Props> = ({ children }) => {
 
-    const [authenticated, setAuthenticated] = useState(false);
+    const [user, setUser] = useState<IUser>(INITIAL_USER);
+ 
+    useEffect(() => {
+    
+        refreshToken();
+    
+    }, [user.email]);
 
     const signIn = async (data: LoginRequest) => {
         
         return AuthComponentFacade
             .instance()
-            .signIn(data, setAuthenticated);
+            .signIn(data, setUser);
+    }
+
+    const refreshToken = () => {
+
+        return AuthComponentFacade
+        .instance()
+        .refreshToken(setUser);
     }
       
       
     const value = {
-        authenticated,
-        setAuthenticated,
+        authenticated: (!!user.email.length),
+        user,
+        setUser,
         signIn
     }
     return (

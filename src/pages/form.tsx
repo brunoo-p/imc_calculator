@@ -20,11 +20,19 @@ const Container = styled(Box)`
 const Content = styled(Box)`
     display: flex;
     width: 100%;
-    max-width: ${({ theme }) => theme.maxWidth};
+    /* max-width: ${({ theme }) => theme.maxWidth}; */
+    max-width: 1600px;
     height: 100%;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+`;
+
+const Image = styled(Box)`
+
+    width: 50%;
+    height: 100%;
+    
 `;
 
 const Form = () => {
@@ -61,7 +69,7 @@ const Form = () => {
                 <LeadSoftBadge />
 
             <Content>
-
+                {/* <Image /> */}
                 <SignIn
                     onLogin={onLogin}
                     messageSubmit={messageSubmit}

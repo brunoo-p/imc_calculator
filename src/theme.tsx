@@ -6,7 +6,7 @@ const theme = {
         primary: '#3659F0',
         secondary: '#1d1d21',
         tertiary: '#60A8F4',
-        text: '#bfbfbf',
+        text: '#8f8e8e',
         background: '#262626'
     },
     badgeMessage : {

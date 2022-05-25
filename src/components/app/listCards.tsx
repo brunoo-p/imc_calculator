@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Card from './card';
 
 import { Box } from '@mui/material';
+import React from 'react';
+import { Person } from './screenMessage/view';
 
 const Container = styled(Box)`
     display: flex;
@@ -17,9 +19,16 @@ const Container = styled(Box)`
     gap: 1rem;
 `;
 
-const ListCards = () => (
+type Props = {
+    persons: Person[]
+}
+const ListCards: React.FC<Props> = ({ persons }) => (
     <Container>
-        <Card />
+        {persons.map((person: Person) => (
+            <React.Fragment key={person.id}>
+                <Card person={person} />
+            </React.Fragment>
+        ))}
     </Container>
 )
 

@@ -9,16 +9,16 @@ const signInRequest = async (api: AxiosInstance, login: LoginRequest) => {
         username: login.username.value,
         password: login.password.value
     };
-    console.log('request', request);
+
     const callApi = () => api.post("/v1/Auth/LogIn", JSON.stringify(request));
     return ApiCaller.caller(callApi);
 };
 
 export interface IAuthService {
-    signInRequest: (login: LoginRequest) => (Promise<any>)
+    signInRequest: (login: LoginRequest) => (Promise<any>),
 }
 const instance = (api: AxiosInstance): IAuthService => ({
-    signInRequest: (login: LoginRequest) => signInRequest(api, login)
+    signInRequest: (login: LoginRequest) => signInRequest(api, login),
 });
 
 const AuthService = {

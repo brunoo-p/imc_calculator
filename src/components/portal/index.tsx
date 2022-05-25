@@ -10,7 +10,7 @@ export const Container = styled.div`
     bottom: 0;
     background: #71bbf822;
     z-index: 9999;
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     justify-content: center;
 
@@ -28,16 +28,20 @@ export const Container = styled.div`
           border-radius: 10px;
     }
 
+    backdrop-filter: blur(5px);
+    
+
 `;
 
 export const Content = styled.div`
     z-index: 99999;
     width: 90%;
-    max-width: 2000px;
+    max-width: 1200px;
     height: 90%;
     display: flex;
     margin: 4%;
     justify-content: center;
+    position: relative;
 `;
 
 type Props = {
