@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useCard } from '../contexts/hooks/useCard';
+
 import { Box } from '@mui/material';
 import styled from 'styled-components';
+
 import ListCards from '../components/app/listCards';
 import Navbar from '../components/app/navbar';
-import CardFacade from '../components/app/cardFacade';
 import { Forms, Person } from '../components/app/screenMessage/view';
+
 import NoContentCard from '../components/noContentCard';
 import Portal from '../components/portal';
 import ScreenMessage from '../components/app/screenMessage';
-import { mapName } from '../utils/mapName';
 
 const Flexbox = styled(Box)`
     display: flex;
@@ -23,9 +25,10 @@ const Container = styled(Flexbox)`
 `;
 const Content = styled(Flexbox)`
     width: 100%;
-    max-width: 1000px;
+    max-width: ${({ theme }) => theme.width};
     height: 90%;
-    
+
+    padding: 20px;
     justify-content: start;
     flex-direction: column;
     
@@ -38,17 +41,9 @@ const Content = styled(Flexbox)`
 
 const Home = () => {
 
+    const { persons } = useCard();
     const [showPortal, setShowPortal] = useState(false);
-    const [persons, setPersons] = useState<Person[]>([])
-    useEffect(() => {
-
-        (async () => {
-
-            const list = await CardFacade.instance().getAll();
-            setPersons(list);
-        
-        })()
-    }, []);
+    const [filterePersons, setFilteredPersons] = useState<Person[]>(persons);
     
     return (
         <Container>
@@ -75,4 +70,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Home;

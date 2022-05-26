@@ -23,7 +23,8 @@ const theme = {
             color: '#3659F0'
         }
     },
-    maxWidth: '1200px'
+    maxWidth: '1200px',
+    width: '1600px'
 
 };
 

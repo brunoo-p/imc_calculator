@@ -11,7 +11,7 @@ const Container = styled(Box)`
     align-items: center;
     flex-direction: column;
     font-weight: 700;
-
+    text-align: center;
     h3 {
         margin: 30px 0px 10px 0; 
     }

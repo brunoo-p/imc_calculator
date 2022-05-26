@@ -1,3 +1,4 @@
+import { Person } from '../components/app/screenMessage/view';
 import { LoginRequest } from './../services/core/auth/authRequestTypes';
 
 export type AuthContextProp = {
@@ -8,8 +9,9 @@ export type AuthContextProp = {
 }
 
 export type CardContextProp = {
-    contentPortal: string,
-    setContentPortal: (value: string) => void
+    persons: Person[] | any,
+    setPersons: (value: Person | any) => void,
+    refreshPersons: () => void,
 }
 
 export interface IUser {

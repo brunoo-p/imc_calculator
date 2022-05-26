@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, Typography } from "@mui/material"
+import { Avatar, Box, Typography } from "@mui/material"
 import { Formik, Form } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -9,23 +9,47 @@ import { validateLogin } from '../utils/validateForm';
 import { LoginProps } from '../pages/formView';
 
 const Container = styled(Box)`
-    display: flex;
     width: 100%;
-    max-width: 700px;
     height: 100%;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+const Content = styled(Box)`
+    position: relative;
+    background-color: #f8f8f8a4;
+    backdrop-filter: blur(10px);
+    border-radius: 1.5em;
     
+    max-width: ${({ theme }) => theme.maxWidth};
     justify-content: center;
     flex-direction: column;
-    padding: 20px 15px;
+    padding: 20px 40px;
     
-    border-radius: 10px;
-    background: #FFFF;
-    
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1), 
+    0 8px 8px rgba(0, 0, 0, 0.1),
+    0 16px 16px rgba(0, 0, 0, 0.1), 
+    0 32px 32px rgba(0, 0, 0, 0.15),
+    0 64px 64px rgba(0, 0, 0, 0.15);
+
+    :before{
+		content: '';
+        display: block;
+        width: 4em;
+        height: 0.6em;
+        background: ${({ theme }) => theme.colors.secondary};
+        opacity: .4;
+        margin: 5px auto;
+        z-index: 5;
+        border-radius: 10em;
+        mix-blend-mode: overlay;
+    }
     @media screen and (min-width: 800px) {
-        max-width: 700px;
+        min-width: 400px;
         height: auto;
         padding: 20px 40px;
+        backdrop-filter: blur(10px);
     }
 `;
 
@@ -103,10 +127,17 @@ const SignIn: React.FC<Props> = ({ onLogin, messageSubmit, classMessage }) => {
         >
                 <Form data-testid="form">
                     
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Typography variant="h4"> Sign in </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'start' }}>
+                        <Typography variant="h5" sx={{ fontWeight: 700, opacity: .5 }}> Sign in </Typography>
                     </Box>
-                    
+
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Avatar
+                            src="https://cdn-icons-png.flaticon.com/512/1246/1246314.png?w=740"
+                            sx={{ width: 100, height: 100, border: '3px solid #3659F0' }}
+                            />
+                    </Box>
+
                     {messageSubmit && <Badge className={classMessage} message={messageSubmit} />}
                     
                     <FormStyle>
@@ -144,7 +175,9 @@ const SignIn: React.FC<Props> = ({ onLogin, messageSubmit, classMessage }) => {
     )
     return (
         <Container>
-            <LoginForm />
+            <Content>
+                <LoginForm />
+            </Content>
         </Container>
     )
 }

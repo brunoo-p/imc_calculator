@@ -11,11 +11,10 @@ const Container = styled.div`
     flex-direction: column;
     
     span {
-        color: #FFFF;
+        color: ${({ theme }) => theme.colors.secondary};
         font-weight: 900;
         height: auto;
         padding: 10px 5px;
-        transform: rotate(180deg);
         writing-mode: vertical-lr;
         cursor: pointer;
     }
@@ -52,7 +51,7 @@ const Wrap = styled(Box)`
     transition: .2s linear;
 `;
 const Hidden = styled(Box)`
-    background: ${({ theme }) => theme.colors.tertiary};
+    background: #1d1d21;
     transform: translateY(-90px);
 `;
 
