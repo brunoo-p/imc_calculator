@@ -4,19 +4,24 @@ import Theme from '../theme';
 
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from '../contexts/auth';
+import CardProvider from '../contexts/card';
 
 const App = () => (
 
     <AuthProvider>
+        <CardProvider>
+
         <Reset />
-        <BrowserRouter>
-            <Theme>
+            <BrowserRouter>
+                <Theme>
 
-                <Routes />
-            
-            </Theme>
+                    <Routes />
+                
+                </Theme>
 
-        </BrowserRouter>
+            </BrowserRouter>
+
+        </CardProvider>
     </AuthProvider>
 );
 

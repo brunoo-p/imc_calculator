@@ -9,6 +9,7 @@ import { ContentMessage, Person } from '../view';
 import CardFacade from '../../cardFacade';
 import { useState } from 'react';
 import { StatusCode } from '../../../../utils/httpStatus';
+import { useCard } from '../../../../contexts/hooks/useCard';
 
 const Container = styled(Card)`
     display: flex;
@@ -54,6 +55,7 @@ type Props = {
 }
 const Exclude: React.FC<Props> = ({ setShowPortal, person }) => {
     
+    const { refreshPersons } = useCard();
     const [content, setContent] = useState<keyof typeof ContentMessage>('Confirm');
 
 
@@ -61,8 +63,10 @@ const Exclude: React.FC<Props> = ({ setShowPortal, person }) => {
         if (person !== (null || undefined)) {
 
             const response = await CardFacade.instance().exclude(person!.id);
+
             if(response.status === StatusCode.NO_CONTENT) {
 
+                refreshPersons();
                 setContent('Done');
 
             }else {
@@ -76,8 +80,11 @@ const Exclude: React.FC<Props> = ({ setShowPortal, person }) => {
     const Confirm = () => (
         <>
             <IconButton sx={{ background: '#2c95f845'}}> <InfoIcon color="info" /> </IconButton>
-            <Typography> Tem certeza que deseja excluir os dados de </Typography>
-            <span> {person?.fullName}</span>
+            <Typography>
+                Tem certeza que deseja excluir os dados de
+                <span> {person?.fullName}</span> ?
+            </Typography>
+
             <Buttons>
                 <Button variant="text" color="error" onClick={() => setShowPortal(false)}> Cancel </Button>
                 <Button variant="contained" onClick={handleExclude}> Continue </Button>

@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material'
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
 import Portal from '../portal';
@@ -10,9 +10,9 @@ import { Forms } from './screenMessage/view';
 const Container = styled(Box)`
     display: flex;
     width: 100%;
-    max-width: 1000px;
+    max-width: ${({ theme }) => theme.width};
     height: 80px;
-    background-image: url("https://www.pbs.up.pt/media/1737/pg_servicos_saude.gif") !important;
+    background-image: url("/static/images/bgApp.gif") !important;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -52,7 +52,7 @@ const Content = styled(Box)`
     }
     
 `;
-const Logo = styled(NavLink)`
+const Logo = styled(Box)`
     width: 100%;
     height: 45px;
     align-items: center;
@@ -79,7 +79,7 @@ const Navbar = () => {
                 </Portal>)
             }
 
-                <Logo to="#">
+                <Logo>
                     <img src="/static/images/leadsoft_logotipo.png" alt="logotipo" />
                 </Logo>
                 <Button

@@ -1,23 +1,36 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import CardFacade from '../components/app/cardFacade';
 import { CardContextProp } from "./view";
 
-const DEFAULT_VALUE = {
-    contentPortal: '',
-    setContentPortal(): void {}
-};
 
-const CardContext = createContext<CardContextProp>(DEFAULT_VALUE);
+export const CardContext = createContext<CardContextProp>({} as CardContextProp);
 
 type Props = {
     children: React.ReactNode;
 }
 const CardProvider: React.FC<Props> = ({ children }) => {
 
-    const [contentPortal, setContentPortal] = useState('');
+    const [persons, setPersons] = useState({} as CardContextProp);
+
+    useEffect(() => {
+
+        (async () => {
+
+            refreshPersons();
+        
+        })()
+
+    }, []);
+
+    const refreshPersons = async () => {
+        const list = await CardFacade.instance().getAll();
+        setPersons(list);
+    };
 
     const value = {
-        contentPortal,
-        setContentPortal
+        persons,
+        setPersons,
+        refreshPersons
     }
     return (
         <CardContext.Provider value={value}>

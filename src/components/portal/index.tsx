@@ -35,13 +35,18 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     z-index: 99999;
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
     height: 90%;
     display: flex;
-    margin: 4%;
+    margin: 0;
     justify-content: center;
     position: relative;
+
+    @media screen and (min-width: 800px) {
+        width: 90%;
+        margin: 4%;
+    }
 `;
 
 type Props = {

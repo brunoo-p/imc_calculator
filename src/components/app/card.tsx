@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import styled from 'styled-components';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -8,32 +8,43 @@ import { useState } from 'react';
 import { Forms, Person } from './screenMessage/view';
 
 const Container = styled(Box)`
-    width: 250px;
-    height: auto;
+    width: 300px;
+    height: 300px;
     
-    padding: 10px;
-    border: 1px solid ${({ theme }) => theme.colors.tertiary};
-    filter: drop-shadow(1px 5px 8px ${({ theme }) => theme.colors.primary});
+    filter: drop-shadow(1px 3px 3px #FFFF);
     background: #FFFF;
     border-radius: 10px;
     
     transform: scale(.9);
     margin-right: 0px;
     transition: .3s ease-out;
-    animation: .5s ease-out show;
+    animation: .5s ease-out moveIn;
+    overflow: hidden;
 
-    @keyframes show {
+    @keyframes moveIn {
         from {transform: translateX(-150px); opacity: 0}
         to {transform: translateX(0px);  opacity: 1}
     }
     :hover {
         transform: scale(1);
+        filter: drop-shadow(1px 3px 8px #ffffff9e);
+    }
+
+    .iconButton {
+        z-index:2;
+        background: #FFFF;
+        :hover {
+            background: ${({ theme }) => theme.badgeMessage.error.background};
+            color: #FFFF;
+        }
     }
 `;
 const Content = styled(Box)`
     display: flex;
     width: 100%;
     height: 100%;
+    flex-direction: column;
+    cursor: pointer;
 
     span {
         font-weight: 900;
@@ -43,9 +54,49 @@ const Content = styled(Box)`
     p {
         color: #FFFF;
         font-weight: 700;
-        color: ${({ theme }) => theme.colors.tertiary};
-
     }
+
+    :hover {
+        .back {
+            height: 85%;
+            button { z-index: 0}
+        }
+        .front {
+            height: 25%;
+        }
+    }
+`;
+
+const FrontCard = styled(Box)`
+    width: 100%;
+    height: 100%;
+
+    background: #ffffff5a;
+    transition: .3s ease-out;
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    span {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        color: ${({ theme }) => theme.colors.secondary};
+    }
+`;
+const BackCard = styled(Box)`
+    width: 100%;
+    height: 12%;
+
+    border-radius: 0px 0px 8px 8px;
+    padding: 10px 0;
+    background: linear-gradient(${({ theme }) => theme.colors.tertiary}, ${({ theme }) => theme.colors.primary});
+    transition: .3s ease-out;
+    h6 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
 `;
 const Attributes = styled(Box)`
     display: flex;
@@ -53,6 +104,7 @@ const Attributes = styled(Box)`
     
     justify-content: space-between;
     margin: 20px 0;
+    padding: 0 20px;
 `;
 const Weight = styled(Box)`
     display: flex;
@@ -60,6 +112,7 @@ const Weight = styled(Box)`
     flex-direction: row;
     
     margin: 20px 0;
+    padding: 0 20px;
     padding-bottom: 10px;
     justify-content: space-around;
 `;
@@ -67,9 +120,12 @@ const Buttons = styled(Box)`
     display: flex;
     width: 100%;
     justify-content: space-evenly;
-
+    border-radius: 50px;
+    background: #FFFF;
+    
     button {
         text-transform: capitalize;
+        z-index: -1;
     }
 `;
 
@@ -90,7 +146,6 @@ const Card: React.FC<Props> = ({ person }) => {
         setScreen(Forms.Exclude);
         setShowPortal(true);
     }
-
     const { fullName, age, weigth: weight, height, imc } = person;
     return (
         <Container>
@@ -100,13 +155,19 @@ const Card: React.FC<Props> = ({ person }) => {
                     <ScreenMessage setShowPortal={setShowPortal} screen={screen} person={person} /> 
                 </Portal>)
             }
+
+            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end', position: 'fixed', transform: 'translateY(20px)' }}>
+                <IconButton
+                    className="iconButton"
+                    onClick={handleExclude}
+                > 
+                    <DeleteOutlineIcon color="error" />
+                </IconButton>
+            </Box>
+
             <Content>
-                <Box>
-                    
-                    <Typography sx={{ display: 'flex', width: '100%', justifyContent: 'center' }} variant="body1">
-                        {fullName}
-                    </Typography>
-                    
+                <BackCard className="back">
+                    <Typography variant="h6"> Detalhes </Typography>
                     <Attributes sx={{ marginTop: '30px' }}>
                         <Typography variant="body2"> <span> Idade: </span> {age} anos  </Typography>
                     </Attributes>
@@ -116,26 +177,23 @@ const Card: React.FC<Props> = ({ person }) => {
                     
                     <Weight>
                         <Typography variant="body2"> <span> Peso: </span> {weight} kg </Typography>
-                        <Typography variant="body2"> <span> IMC: </span> {imc} </Typography>
+                        <Typography variant="body2"> <span> IMC: </span> {imc.toFixed(3)} </Typography>
                     </Weight>
                     <Buttons>
                         <Button 
                             variant="text"
-                            startIcon={ <ModeEditOutlinedIcon color="info" /> }
+                            startIcon={ <ModeEditOutlinedIcon color="action" /> }
                             onClick={handleEdit}
                         >
                             Alterar
                         </Button>
-                        <Button
-                            variant="text"
-                            color="error"
-                            startIcon={ <DeleteOutlineIcon color="error" /> }
-                            onClick={handleExclude}
-                        > 
-                            Excluir
-                        </Button>
                     </Buttons>
-                </Box>
+                </BackCard>
+                <FrontCard className="front">
+
+                    <span> { fullName }</span>
+                
+                </FrontCard>
             </Content>
         </Container>
     )
